@@ -17,15 +17,3 @@
   transform: translate(-50%, -50%);
   transition: width 0.2s ease, height 0.2s ease;
 }
-
-/* Scroll marker responsive */
-@media (max-width: 640px) {
-  .scroll-marker svg {
-    width: 25px;
-    height: 25px;
-  }
-  .scroll-marker {
-    left: 1rem;
-    bottom: 1rem;
-  }
-}

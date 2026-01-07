@@ -23,13 +23,13 @@
     <link rel="stylesheet" href="assets/css/styles.css" />
   </head>
 
-  <body data-theme="dark">
+  <body class="bg-black text-white">
     <!-- CURSOR -->
     <div class="cursor"></div>
 
     <!-- NAVBAR -->
     <header
-      class="fixed w-full top-0 left-0 z-50 flex justify-between items-center p-4"
+      class="fixed w-full top-0 left-0 z-50 bg-transparent flex justify-between items-center p-4"
     >
       <button id="theme-toggle" class="px-2 py-1 border rounded">🌙/☀️</button>
       <div class="text-xl font-bold">MiMarca</div>
@@ -44,7 +44,7 @@
     <!-- LOADER -->
     <section
       id="loader"
-      class="fixed inset-0 flex justify-center items-center z-50"
+      class="fixed inset-0 flex justify-center items-center bg-black z-50"
     >
       <h1 class="loader-text text-4xl sm:text-6xl md:text-7xl font-bold">
         <span>M</span><span>I</span><span> </span><span>P</span><span>O</span
@@ -54,7 +54,7 @@
     </section>
 
     <!-- SCROLL MARKER -->
-    <div class="scroll-marker fixed left-8 bottom-4 z-50">
+    <div class="scroll-marker fixed left-8 bottom-4 text-white z-50">
       <svg width="40" height="40" viewBox="0 0 100 100">
         <circle
           cx="50"
@@ -70,7 +70,7 @@
     <!-- HERO SECTION -->
     <section
       id="hero"
-      class="h-screen flex flex-col justify-center items-center text-center"
+      class="h-screen flex flex-col justify-center items-center text-center bg-black"
     >
       <h1 class="text-4xl sm:text-6xl md:text-7xl font-bold opacity-0">
         Mi Nombre
@@ -83,37 +83,33 @@
     <!-- ABOUT / SKILLS -->
     <section
       id="about"
-      class="flex flex-col md:flex-row h-screen overflow-x-auto p-8 text-current"
+      class="flex flex-col md:flex-row h-screen overflow-x-auto md:overflow-x-scroll bg-gray-900"
     >
-      <div class="flex-shrink-0 w-full md:w-1/2 h-64 md:h-full">
+      <div class="flex-shrink-0 w-full md:w-1/2 h-64 md:h-full bg-gray-700">
         <img
-          src="https://via.placeholder.com/600x800.png"
+          src="https://via.placeholder.com/600x800"
           class="object-cover h-full w-full"
           alt="Foto"
         />
       </div>
-      <div class="flex-shrink-0 w-full md:w-1/2 h-auto md:h-full p-8">
+      <div
+        class="flex-shrink-0 w-full md:w-1/2 h-auto md:h-full p-8 text-white"
+      >
         <h2 class="text-3xl sm:text-4xl font-bold opacity-0">Sobre mí</h2>
         <p class="mt-4 opacity-0">
           Breve descripción sobre ti. Aquí puedes contar tu experiencia y
           filosofía de trabajo.
         </p>
         <div class="mt-8 flex space-x-4 opacity-0 flex-wrap">
-          <span class="px-3 py-1 rounded" style="background-color: #facc15"
-            >HTML</span
-          >
-          <span class="px-3 py-1 rounded" style="background-color: #22c55e"
-            >CSS</span
-          >
-          <span class="px-3 py-1 rounded" style="background-color: #3b82f6"
-            >JS</span
-          >
+          <span class="px-3 py-1 bg-yellow-500 rounded">HTML</span>
+          <span class="px-3 py-1 bg-green-500 rounded">CSS</span>
+          <span class="px-3 py-1 bg-blue-500 rounded">JS</span>
         </div>
       </div>
     </section>
 
     <!-- PROJECTS -->
-    <section id="projects" class="min-h-screen p-8">
+    <section id="projects" class="min-h-screen bg-black p-8">
       <h2 class="text-4xl font-bold opacity-0 mb-8">Proyectos</h2>
       <div class="flex space-x-4 mb-4 opacity-0 flex-wrap">
         <button class="project-filter px-4 py-2 border rounded" data-type="all">
@@ -139,13 +135,22 @@
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8"
         id="projects-container"
       >
-        <div class="project-card p-4 rounded opacity-0" data-type="photo">
+        <div
+          class="project-card bg-gray-800 p-4 rounded opacity-0"
+          data-type="photo"
+        >
           <h3 class="text-xl font-bold">Proyecto 1</h3>
         </div>
-        <div class="project-card p-4 rounded opacity-0" data-type="branding">
+        <div
+          class="project-card bg-gray-800 p-4 rounded opacity-0"
+          data-type="branding"
+        >
           <h3 class="text-xl font-bold">Proyecto 2</h3>
         </div>
-        <div class="project-card p-4 rounded opacity-0" data-type="3d">
+        <div
+          class="project-card bg-gray-800 p-4 rounded opacity-0"
+          data-type="3d"
+        >
           <h3 class="text-xl font-bold">Proyecto 3</h3>
         </div>
       </div>
@@ -154,7 +159,7 @@
     <!-- CONTACT / OUTRO -->
     <section
       id="contact"
-      class="h-screen flex flex-col justify-center items-center p-8 text-current"
+      class="h-screen flex flex-col justify-center items-center bg-gray-900 text-white"
     >
       <h2 class="text-4xl font-bold opacity-0">Contacto</h2>
       <p class="mt-4 opacity-0">Aquí puedes escribirme</p>
@@ -166,6 +171,6 @@
     </section>
 
     <!-- JS -->
-    <script src="js/main.js"></script>
+    <script src="assets/js/main.js"></script>
   </body>
 </html>
