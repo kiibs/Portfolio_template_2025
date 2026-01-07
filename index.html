@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mi Portfolio</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- GSAP CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- CSS propios -->
+    <link rel="stylesheet" type="text/css" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+
+  <body class="bg-black text-white">
+    <!-- CURSOR -->
+    <div class="cursor"></div>
+
+    <!-- NAVBAR -->
+    <header
+      class="fixed w-full top-0 left-0 z-50 bg-transparent flex justify-between items-center p-4"
+    >
+      <button id="theme-toggle" class="px-2 py-1 border rounded">🌙/☀️</button>
+      <div class="text-xl font-bold">MiMarca</div>
+      <nav class="space-x-4">
+        <a href="#hero" class="hover:text-yellow-400">Hero</a>
+        <a href="#about" class="hover:text-yellow-400">About</a>
+        <a href="#projects" class="hover:text-yellow-400">Projects</a>
+        <a href="#contact" class="hover:text-yellow-400">Contact</a>
+      </nav>
+    </header>
+
+    <!-- LOADER -->
+    <section
+      id="loader"
+      class="fixed inset-0 flex justify-center items-center bg-black z-50"
+    >
+      <h1 class="loader-text text-4xl sm:text-6xl md:text-7xl font-bold">
+        <span>M</span><span>I</span><span> </span><span>P</span><span>O</span
+        ><span>R</span><span>T</span><span>F</span><span>O</span><span>L</span
+        ><span>I</span><span>O</span>
+      </h1>
+    </section>
+
+    <!-- SCROLL MARKER -->
+    <div class="scroll-marker fixed left-8 bottom-4 text-white z-50">
+      <svg width="40" height="40" viewBox="0 0 100 100">
+        <circle
+          cx="50"
+          cy="50"
+          r="40"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="8"
+        />
+      </svg>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section
+      id="hero"
+      class="h-screen flex flex-col justify-center items-center text-center bg-black"
+    >
+      <h1 class="text-4xl sm:text-6xl md:text-7xl font-bold opacity-0">
+        Mi Nombre
+      </h1>
+      <p class="mt-4 text-lg sm:text-xl opacity-0">
+        Desarrollador / Creativo Web
+      </p>
+    </section>
+
+    <!-- ABOUT / SKILLS -->
+    <section
+      id="about"
+      class="flex flex-col md:flex-row h-screen overflow-x-auto md:overflow-x-scroll bg-gray-900"
+    >
+      <div class="flex-shrink-0 w-full md:w-1/2 h-64 md:h-full bg-gray-700">
+        <img
+          src="https://via.placeholder.com/600x800"
+          class="object-cover h-full w-full"
+          alt="Foto"
+        />
+      </div>
+      <div
+        class="flex-shrink-0 w-full md:w-1/2 h-auto md:h-full p-8 text-white"
+      >
+        <h2 class="text-3xl sm:text-4xl font-bold opacity-0">Sobre mí</h2>
+        <p class="mt-4 opacity-0">
+          Breve descripción sobre ti. Aquí puedes contar tu experiencia y
+          filosofía de trabajo.
+        </p>
+        <div class="mt-8 flex space-x-4 opacity-0 flex-wrap">
+          <span class="px-3 py-1 bg-yellow-500 rounded">HTML</span>
+          <span class="px-3 py-1 bg-green-500 rounded">CSS</span>
+          <span class="px-3 py-1 bg-blue-500 rounded">JS</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="min-h-screen bg-black p-8">
+      <h2 class="text-4xl font-bold opacity-0 mb-8">Proyectos</h2>
+      <div class="flex space-x-4 mb-4 opacity-0 flex-wrap">
+        <button class="project-filter px-4 py-2 border rounded" data-type="all">
+          All
+        </button>
+        <button
+          class="project-filter px-4 py-2 border rounded"
+          data-type="photo"
+        >
+          Fotografía
+        </button>
+        <button
+          class="project-filter px-4 py-2 border rounded"
+          data-type="branding"
+        >
+          Branding
+        </button>
+        <button class="project-filter px-4 py-2 border rounded" data-type="3d">
+          3D
+        </button>
+      </div>
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8"
+        id="projects-container"
+      >
+        <div
+          class="project-card bg-gray-800 p-4 rounded opacity-0"
+          data-type="photo"
+        >
+          <h3 class="text-xl font-bold">Proyecto 1</h3>
+        </div>
+        <div
+          class="project-card bg-gray-800 p-4 rounded opacity-0"
+          data-type="branding"
+        >
+          <h3 class="text-xl font-bold">Proyecto 2</h3>
+        </div>
+        <div
+          class="project-card bg-gray-800 p-4 rounded opacity-0"
+          data-type="3d"
+        >
+          <h3 class="text-xl font-bold">Proyecto 3</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT / OUTRO -->
+    <section
+      id="contact"
+      class="h-screen flex flex-col justify-center items-center bg-gray-900 text-white"
+    >
+      <h2 class="text-4xl font-bold opacity-0">Contacto</h2>
+      <p class="mt-4 opacity-0">Aquí puedes escribirme</p>
+      <div class="mt-8 flex space-x-4 opacity-0 flex-wrap">
+        <a href="#" class="hover:text-yellow-400">Instagram</a>
+        <a href="#" class="hover:text-yellow-400">LinkedIn</a>
+        <a href="#" class="hover:text-yellow-400">Email</a>
+      </div>
+    </section>
+
+    <!-- JS -->
+    <script src="js/main.js"></script>
+  </body>
+</html>

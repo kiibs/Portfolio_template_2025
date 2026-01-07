@@ -1,0 +1,31 @@
+/* Loader spans para ola */
+.loader-text span {
+  display: inline-block;
+  transform-origin: center bottom;
+}
+
+/* Cursor personalizado */
+.cursor {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 1000;
+  mix-blend-mode: difference;
+  background-color: white;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease;
+}
+
+/* Scroll marker responsive */
+@media (max-width: 640px) {
+  .scroll-marker svg {
+    width: 25px;
+    height: 25px;
+  }
+  .scroll-marker {
+    left: 1rem;
+    bottom: 1rem;
+  }
+}
