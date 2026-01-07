@@ -32,8 +32,13 @@
       class="fixed w-full top-0 left-0 z-50 bg-transparent flex justify-between items-center p-4"
     >
       <button id="theme-toggle" class="px-2 py-1 border rounded">🌙/☀️</button>
-      <div class="text-xl font-bold">MiMarca</div>
-      <nav class="space-x-4">
+      <div
+        class="absolute left-1/2 transform -translate-x-1/2 text-xl font-bold uppercase"
+      >
+        MiMarca
+      </div>
+
+      <nav class="flex space-x-4">
         <a href="#hero" class="hover:text-yellow-400">Hero</a>
         <a href="#about" class="hover:text-yellow-400">About</a>
         <a href="#projects" class="hover:text-yellow-400">Projects</a>
@@ -70,10 +75,16 @@
     <!-- HERO SECTION -->
     <section
       id="hero"
-      class="h-screen flex flex-col justify-center items-center text-center bg-black"
+      class="h-screen flex flex-col justify-center items-center text-center"
     >
-      <h1 class="text-4xl sm:text-6xl md:text-7xl font-bold">Mi Nombre</h1>
-      <p class="mt-4 text-lg sm:text-xl">Desarrollador / Creativo Web</p>
+      <h1
+        class="text-6xl sm:text-8xl md:text-9xl font-bold uppercase cursor-pointer"
+      >
+        MI NOMBRE
+      </h1>
+      <p class="mt-4 text-2xl sm:text-3xl md:text-4xl uppercase cursor-pointer">
+        DESARROLLADOR / CREATIVO WEB
+      </p>
     </section>
 
     <!-- ABOUT / SKILLS -->

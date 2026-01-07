@@ -43,6 +43,19 @@ setTimeout(() => {
 gsap.from("#hero h1", { opacity: 0, y: 50, duration: 1 });
 gsap.from("#hero p", { opacity: 0, y: 50, duration: 1, delay: 0.5 });
 
+// Hero hover animation
+const heroTitle = document.querySelector("#hero h1");
+const heroSubtitle = document.querySelector("#hero p");
+
+[heroTitle, heroSubtitle].forEach((el) => {
+  el.addEventListener("mouseenter", () => {
+    gsap.to(el, { y: -10, duration: 0.3, ease: "power1.out" });
+  });
+  el.addEventListener("mouseleave", () => {
+    gsap.to(el, { y: 0, duration: 0.3, ease: "power1.in" });
+  });
+});
+
 // ------------------------
 // Cursor interactivo en Hero (solo desktop)
 // ------------------------
