@@ -45,7 +45,6 @@ gsap.from("#hero p", { opacity: 0, y: 50, duration: 1, delay: 0.5 });
 
 // ------------------------
 // Cursor interactivo en Hero (solo desktop)
-// ------------------------
 const cursor = document.querySelector(".cursor");
 
 if (window.innerWidth > 768) {
@@ -68,8 +67,7 @@ if (window.innerWidth > 768) {
 }
 
 // ------------------------
-// About section animations (responsive)
-// ------------------------
+// About animations
 gsap.from("#about h2", {
   scrollTrigger: "#about",
   opacity: 0,
@@ -92,8 +90,7 @@ gsap.from("#about .flex.space-x-4", {
 });
 
 // ------------------------
-// Projects section animations
-// ------------------------
+// Projects animations
 gsap.from("#projects h2", {
   scrollTrigger: "#projects",
   opacity: 0,
@@ -126,8 +123,7 @@ filters.forEach((btn) => {
 });
 
 // ------------------------
-// Contact section animations
-// ------------------------
+// Contact animations
 gsap.from("#contact h2", {
   scrollTrigger: "#contact",
   opacity: 0,
@@ -150,8 +146,7 @@ gsap.from("#contact .flex.space-x-4", {
 });
 
 // ------------------------
-// Scroll Marker animation
-// ------------------------
+// Scroll marker
 gsap.to(".scroll-marker", {
   y: () => window.innerHeight - 100,
   rotation: 360,
@@ -164,7 +159,6 @@ gsap.to(".scroll-marker", {
   },
 });
 
-// Ajuste tamaño en móviles
 if (window.innerWidth <= 640) {
   const marker = document.querySelector(".scroll-marker svg");
   marker.style.width = "25px";
@@ -175,11 +169,16 @@ if (window.innerWidth <= 640) {
 
 // ------------------------
 // Theme toggle
-// ------------------------
 const toggle = document.getElementById("theme-toggle");
+
 toggle.addEventListener("click", () => {
-  document.body.classList.toggle("bg-black");
-  document.body.classList.toggle("text-white");
-  document.body.classList.toggle("bg-white");
-  document.body.classList.toggle("text-black");
+  if (document.body.dataset.theme === "dark") {
+    document.body.dataset.theme = "light";
+    document.body.style.backgroundColor = "white";
+    document.body.style.color = "black";
+  } else {
+    document.body.dataset.theme = "dark";
+    document.body.style.backgroundColor = "black";
+    document.body.style.color = "white";
+  }
 });
