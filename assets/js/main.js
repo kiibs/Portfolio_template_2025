@@ -40,13 +40,14 @@ setTimeout(() => {
 // ------------------------
 // Hero animation
 // ------------------------
-gsap.from("#hero h1", { opacity: 0, y: 50, duration: 1 });
-gsap.from("#hero p", { opacity: 0, y: 50, duration: 1, delay: 0.5 });
-
-// Hero hover animation
 const heroTitle = document.querySelector("#hero h1");
 const heroSubtitle = document.querySelector("#hero p");
 
+// Entrada inicial
+gsap.from(heroTitle, { opacity: 0, y: 50, duration: 3 });
+gsap.from(heroSubtitle, { opacity: 0, y: 50, duration: 3, delay: 1.5 });
+
+// Hover animation
 [heroTitle, heroSubtitle].forEach((el) => {
   el.addEventListener("mouseenter", () => {
     gsap.to(el, { y: -10, duration: 0.3, ease: "power1.out" });
@@ -195,4 +196,60 @@ toggle.addEventListener("click", () => {
   document.body.classList.toggle("text-white");
   document.body.classList.toggle("bg-white");
   document.body.classList.toggle("text-black");
+});
+
+// ------------------------
+// Hero circle animado con rastro multicolor
+// ------------------------
+const heroCircle = document.getElementById("hero-circle");
+const heroTrail = document.getElementById("hero-trail");
+const heroTitleCircle = document.getElementById("hero-title"); // renombrada
+
+// Obtener posición final
+const titleRect = heroTitleCircle.getBoundingClientRect();
+const finalX = titleRect.right - 10;
+const finalY = titleRect.top + titleRect.height / 2 - 3;
+
+// Posición inicial fuera de la pantalla
+gsap.set(heroCircle, { x: -50, y: finalY });
+
+// Colores del rastro
+const colors = [
+  "#ff3c3c",
+  "#ffae3c",
+  "#3cff8b",
+  "#3cb0ff",
+  "#d43cff",
+  "#ff3cbf",
+];
+
+// Función para crear trail dots
+function createTrailDot(x, y, color) {
+  const dot = document.createElement("div");
+  dot.classList.add("trail-dot");
+  dot.style.backgroundColor = color;
+  dot.style.left = x + "px";
+  dot.style.top = y + "px";
+  heroTrail.appendChild(dot);
+
+  gsap.to(dot, { opacity: 0, duration: 1.2, onComplete: () => dot.remove() });
+}
+
+// Animación principal del círculo
+gsap.to(heroCircle, {
+  x: finalX,
+  y: finalY,
+  duration: 2.5,
+  ease: "power2.inOut",
+  onUpdate: function () {
+    const x = gsap.getProperty(heroCircle, "x");
+    const y = gsap.getProperty(heroCircle, "y");
+    const t = this.progress(); // 0 a 1
+    const colorIndex = Math.floor(t * (colors.length - 1));
+    heroCircle.style.backgroundColor = colors[colorIndex];
+    createTrailDot(x, y, colors[colorIndex]);
+  },
+  onComplete: () => {
+    gsap.to(heroCircle, { opacity: 0, duration: 0.5 });
+  },
 });

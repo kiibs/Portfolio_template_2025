@@ -17,3 +17,17 @@
   transform: translate(-50%, -50%);
   transition: width 0.2s ease, height 0.2s ease;
 }
+
+#hero-circle {
+  filter: blur(2px);
+}
+
+.trail-dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  opacity: 0.4;
+  filter: blur(4px);
+  pointer-events: none;
+}
