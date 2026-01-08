@@ -1,255 +1,169 @@
 gsap.registerPlugin(ScrollTrigger);
 
-// ------------------------
-// Loader seguro + ola + colores llamativos
-// ------------------------
-const loaderSpans = document.querySelectorAll(".loader-text span");
+window.addEventListener("load", () => {
+  /* =========================
+     TEMAS – persistente y loader
+  ========================= */
+  const loader = document.getElementById("loader");
+  const toggleBtn = document.getElementById("theme-toggle");
+  const themeIcon = document.getElementById("theme-icon");
 
-// Animación de color llamativa (una sola vez)
-gsap.fromTo(
-  loaderSpans,
-  { color: "#777", y: 0 },
-  {
-    color: ["#ff3c3c", "#ffae3c", "#3cff8b", "#3cb0ff", "#d43cff", "#ff3cbf"],
-    y: -15,
-    stagger: 0.05,
-    duration: 0.5,
-    yoyo: true,
-    repeat: 1,
-    ease: "power1.inOut",
+  let savedTheme = localStorage.getItem("theme") || "dark";
+
+  if (savedTheme === "dark") {
+    document.body.classList.add("bg-black", "text-white");
+    themeIcon.src = "assets/icons/sol.svg";
+    loader.style.backgroundColor = "#000";
+  } else {
+    document.body.classList.add("bg-white", "text-black");
+    themeIcon.src = "assets/icons/luna.svg";
+    loader.style.backgroundColor = "#fff";
   }
-);
 
-// Ola ligera (infinita) para cada letra
-loaderSpans.forEach((span, i) => {
-  gsap.to(span, {
-    y: 10,
-    duration: 0.6,
-    repeat: -1,
-    yoyo: true,
-    delay: i * 0.05,
-    ease: "sine.inOut",
-  });
-});
+  toggleBtn.addEventListener("click", () => {
+    const isDark = document.body.classList.contains("bg-black");
 
-// Desaparecer loader tras 2.5s
-setTimeout(() => {
-  gsap.to("#loader", { opacity: 0, duration: 0.8, pointerEvents: "none" });
-}, 2500);
+    if (isDark) {
+      document.body.classList.remove("bg-black", "text-white");
+      document.body.classList.add("bg-white", "text-black");
+      themeIcon.src = "assets/icons/luna.svg";
+      localStorage.setItem("theme", "light");
+    } else {
+      document.body.classList.remove("bg-white", "text-black");
+      document.body.classList.add("bg-black", "text-white");
+      themeIcon.src = "assets/icons/sol.svg";
+      localStorage.setItem("theme", "dark");
+    }
 
-// ------------------------
-// Hero animation
-// ------------------------
-const heroTitle = document.querySelector("#hero h1");
-const heroSubtitle = document.querySelector("#hero p");
-
-// Entrada inicial
-gsap.from(heroTitle, { opacity: 0, y: 50, duration: 3 });
-gsap.from(heroSubtitle, { opacity: 0, y: 50, duration: 3, delay: 1.5 });
-
-// Hover animation
-[heroTitle, heroSubtitle].forEach((el) => {
-  el.addEventListener("mouseenter", () => {
-    gsap.to(el, { y: -10, duration: 0.3, ease: "power1.out" });
-  });
-  el.addEventListener("mouseleave", () => {
-    gsap.to(el, { y: 0, duration: 0.3, ease: "power1.in" });
-  });
-});
-
-// ------------------------
-// Cursor interactivo en Hero (solo desktop)
-// ------------------------
-const cursor = document.querySelector(".cursor");
-
-if (window.innerWidth > 768) {
-  document.addEventListener("mousemove", (e) => {
-    cursor.style.left = e.clientX + "px";
-    cursor.style.top = e.clientY + "px";
+    gsap.fromTo(
+      themeIcon,
+      { rotation: -90, opacity: 0 },
+      { rotation: 0, opacity: 1, duration: 0.4 }
+    );
   });
 
-  const hero = document.getElementById("hero");
-  hero.addEventListener("mouseenter", () => {
-    cursor.style.width = "30px";
-    cursor.style.height = "30px";
-  });
-  hero.addEventListener("mouseleave", () => {
-    cursor.style.width = "20px";
-    cursor.style.height = "20px";
-  });
-} else {
-  cursor.style.display = "none";
-}
+  /* =========================
+     LOADER – letras fluidas + ola
+  ========================= */
+  const loaderSpans = document.querySelectorAll(".loader-text span");
+  const loaderColors = [
+    "#ff3c3c",
+    "#ffae3c",
+    "#3cff8b",
+    "#3cb0ff",
+    "#d43cff",
+    "#ff3cbf",
+  ];
 
-// ------------------------
-// About section animations (responsive)
-// ------------------------
-gsap.from("#about h2", {
-  scrollTrigger: "#about",
-  opacity: 0,
-  x: -100,
-  duration: 1,
-});
-gsap.from("#about p", {
-  scrollTrigger: "#about",
-  opacity: 0,
-  x: 100,
-  duration: 1,
-  delay: 0.3,
-});
-gsap.from("#about .flex.space-x-4", {
-  scrollTrigger: "#about",
-  opacity: 0,
-  y: 50,
-  duration: 1,
-  delay: 0.6,
-});
+  loaderSpans.forEach((span, i) => {
+    gsap.to(span, {
+      y: 10,
+      duration: 0.4,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+      delay: i * 0.05,
+    });
 
-// ------------------------
-// Projects section animations
-// ------------------------
-gsap.from("#projects h2", {
-  scrollTrigger: "#projects",
-  opacity: 0,
-  y: 50,
-  duration: 1,
-});
-gsap.from(".project-card", {
-  scrollTrigger: ".project-card",
-  opacity: 0,
-  y: 50,
-  stagger: 0.2,
-  duration: 1,
-});
+    gsap.to(
+      {},
+      {
+        repeat: -1,
+        duration: loaderColors.length * 3,
+        onUpdate: function () {
+          const t = Date.now() / 600 + i * 0.3;
+          const index = Math.floor(t) % loaderColors.length;
+          const nextIndex = (index + 1) % loaderColors.length;
+          const progress = t % 1;
 
-// Project filter click
-const filters = document.querySelectorAll(".project-filter");
-const cards = document.querySelectorAll(".project-card");
+          function lerpColor(a, b, t) {
+            const ah = parseInt(a.replace("#", ""), 16),
+              ar = (ah >> 16) & 0xff,
+              ag = (ah >> 8) & 0xff,
+              ab = ah & 0xff;
+            const bh = parseInt(b.replace("#", ""), 16),
+              br = (bh >> 16) & 0xff,
+              bg = (bh >> 8) & 0xff,
+              bb = bh & 0xff;
+            const rr = Math.round(ar + (br - ar) * progress),
+              rg = Math.round(ag + (bg - ag) * progress),
+              rb = Math.round(ab + (bb - ab) * progress);
+            span.style.color = `rgb(${rr},${rg},${rb})`;
+          }
 
-filters.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const type = btn.dataset.type;
-    cards.forEach((card) => {
-      if (type === "all" || card.dataset.type === type) {
-        gsap.to(card, { opacity: 1, display: "block", duration: 0.5 });
-      } else {
-        gsap.to(card, { opacity: 0, display: "none", duration: 0.5 });
+          lerpColor(loaderColors[index], loaderColors[nextIndex], progress);
+        },
       }
+    );
+  });
+
+  setTimeout(() => {
+    gsap.to("#loader", { opacity: 0, duration: 0.4, pointerEvents: "none" });
+  }, 1500);
+
+  /* =========================
+     HERO TEXT
+  ========================= */
+  const heroTitle = document.querySelector("#hero h1");
+  const heroSubtitle = document.querySelector("#hero p");
+
+  gsap.from(heroTitle, { opacity: 0, y: 60, duration: 1.5 });
+  gsap.from(heroSubtitle, { opacity: 0, y: 40, duration: 1.2, delay: 0.6 });
+
+  [heroTitle, heroSubtitle].forEach((el) => {
+    el.addEventListener("mouseenter", () => {
+      gsap.to(el, { y: -10, duration: 0.3 });
+    });
+    el.addEventListener("mouseleave", () => {
+      gsap.to(el, { y: 0, duration: 0.3 });
     });
   });
-});
 
-// ------------------------
-// Contact section animations
-// ------------------------
-gsap.from("#contact h2", {
-  scrollTrigger: "#contact",
-  opacity: 0,
-  y: 50,
-  duration: 1,
-});
-gsap.from("#contact p", {
-  scrollTrigger: "#contact",
-  opacity: 0,
-  y: 50,
-  duration: 1,
-  delay: 0.3,
-});
-gsap.from("#contact .flex.space-x-4", {
-  scrollTrigger: "#contact",
-  opacity: 0,
-  y: 50,
-  duration: 1,
-  delay: 0.6,
-});
+  /* =========================
+     CURSOR
+  ========================= */
+  const cursor = document.querySelector(".cursor");
+  if (window.innerWidth > 768) {
+    document.addEventListener("mousemove", (e) => {
+      cursor.style.left = e.clientX + "px";
+      cursor.style.top = e.clientY + "px";
+    });
+  } else cursor.style.display = "none";
 
-// ------------------------
-// Scroll Marker animation
-// ------------------------
-gsap.to(".scroll-marker", {
-  y: () => window.innerHeight - 100,
-  rotation: 360,
-  ease: "none",
-  scrollTrigger: {
-    trigger: "body",
-    start: "top top",
-    end: "bottom bottom",
-    scrub: true,
-  },
-});
+  /* =========================
+     ABOUT – SCROLL HORIZONTAL
+  ========================= */
+  const aboutInner = document.querySelector(".about-inner");
+  const aboutSection = document.querySelector("#about");
 
-// Ajuste tamaño en móviles
-if (window.innerWidth <= 640) {
-  const marker = document.querySelector(".scroll-marker svg");
-  marker.style.width = "25px";
-  marker.style.height = "25px";
-  document.querySelector(".scroll-marker").style.left = "1rem";
-  document.querySelector(".scroll-marker").style.bottom = "1rem";
-}
+  if (aboutInner && aboutSection) {
+    const scrollWidth = aboutInner.scrollWidth - aboutSection.offsetWidth;
 
-// ------------------------
-// Theme toggle
-// ------------------------
-const toggle = document.getElementById("theme-toggle");
-toggle.addEventListener("click", () => {
-  document.body.classList.toggle("bg-black");
-  document.body.classList.toggle("text-white");
-  document.body.classList.toggle("bg-white");
-  document.body.classList.toggle("text-black");
-});
+    gsap.to(aboutInner, {
+      x: -scrollWidth,
+      ease: "none",
+      scrollTrigger: {
+        trigger: aboutSection,
+        start: "top top",
+        end: () => "+=" + scrollWidth,
+        scrub: true,
+        pin: true,
+      },
+    });
+  }
 
-// ------------------------
-// Hero circle animado con rastro multicolor
-// ------------------------
-const heroCircle = document.getElementById("hero-circle");
-const heroTrail = document.getElementById("hero-trail");
-const heroTitleCircle = document.getElementById("hero-title"); // renombrada
-
-// Obtener posición final
-const titleRect = heroTitleCircle.getBoundingClientRect();
-const finalX = titleRect.right - 10;
-const finalY = titleRect.top + titleRect.height / 2 - 3;
-
-// Posición inicial fuera de la pantalla
-gsap.set(heroCircle, { x: -50, y: finalY });
-
-// Colores del rastro
-const colors = [
-  "#ff3c3c",
-  "#ffae3c",
-  "#3cff8b",
-  "#3cb0ff",
-  "#d43cff",
-  "#ff3cbf",
-];
-
-// Función para crear trail dots
-function createTrailDot(x, y, color) {
-  const dot = document.createElement("div");
-  dot.classList.add("trail-dot");
-  dot.style.backgroundColor = color;
-  dot.style.left = x + "px";
-  dot.style.top = y + "px";
-  heroTrail.appendChild(dot);
-
-  gsap.to(dot, { opacity: 0, duration: 1.2, onComplete: () => dot.remove() });
-}
-
-// Animación principal del círculo
-gsap.to(heroCircle, {
-  x: finalX,
-  y: finalY,
-  duration: 2.5,
-  ease: "power2.inOut",
-  onUpdate: function () {
-    const x = gsap.getProperty(heroCircle, "x");
-    const y = gsap.getProperty(heroCircle, "y");
-    const t = this.progress(); // 0 a 1
-    const colorIndex = Math.floor(t * (colors.length - 1));
-    heroCircle.style.backgroundColor = colors[colorIndex];
-    createTrailDot(x, y, colors[colorIndex]);
-  },
-  onComplete: () => {
-    gsap.to(heroCircle, { opacity: 0, duration: 0.5 });
-  },
+  /* =========================
+     SCROLL MARKER
+  ========================= */
+  gsap.to(".scroll-marker", {
+    y: () => window.innerHeight - 120,
+    rotation: 360,
+    ease: "none",
+    scrollTrigger: {
+      trigger: "body",
+      start: "top top",
+      end: "bottom bottom",
+      scrub: true,
+    },
+  });
 });
