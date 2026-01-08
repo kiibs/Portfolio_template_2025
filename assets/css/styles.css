@@ -37,7 +37,6 @@ header {
   -webkit-backdrop-filter: blur(12px);
   border-radius: 0 0 16px 16px; /* opcional, bordes redondeados abajo */
   transition: background-color 0.4s ease, border 0.4s ease;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Fondo según tema */
@@ -85,11 +84,14 @@ body.bg-white header {
 /* -------------------------
    ABOUT (scroll horizontal)
 ------------------------- */
+#about {
+  padding-top: 8rem; /* desde arriba */
+}
+
 .about-inner {
   display: flex;
   width: 200%;
 }
-
 /* -------------------------
    SCROLL MARKER
 ------------------------- */
