@@ -3,204 +3,439 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mi Portfolio</title>
-
-    <!-- Tailwind CDN -->
+    <title>Portfolio | Your Name</title>
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- GSAP CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
-    <!-- Google Fonts -->
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
       rel="stylesheet"
     />
 
-    <!-- CSS propios -->
-    <link rel="stylesheet" type="text/css" href="assets/css/base.css" />
     <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="icon" href="assets/icons/favicon.png" type="image/png" />
+
+    <style>
+      #mobile-menu.active {
+        transform: translateX(0);
+      }
+      .line {
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        transform-origin: center;
+      }
+      .menu-open .line-1 {
+        transform: translateY(7px) rotate(45deg);
+      }
+      .menu-open .line-2 {
+        opacity: 0;
+      }
+      .menu-open .line-3 {
+        transform: translateY(-7px) rotate(-45deg);
+      }
+
+      #about {
+        width: 100%;
+        overflow: hidden;
+      }
+      .about-inner {
+        display: flex;
+        flex-wrap: nowrap;
+      }
+    </style>
   </head>
+  <body
+    class="bg-black text-white transition-colors duration-500 overflow-x-hidden"
+  >
+    <div
+      class="cursor hidden md:block fixed w-5 h-5 bg-white rounded-full mix-blend-difference pointer-events-none z-[9999]"
+    ></div>
 
-  <body>
-    <!-- CURSOR -->
-    <div class="cursor"></div>
-
-    <!-- NAVBAR -->
     <header
-      class="fixed w-full top-0 left-0 z-50 bg-transparent flex justify-between items-center p-4"
+      class="fixed w-full top-0 left-0 z-[100] flex justify-between items-center p-4 md:px-10 backdrop-blur-md border-b border-white/10"
     >
       <button
         id="theme-toggle"
-        class="w-8 h-8 flex items-center justify-center"
-        aria-label="Toggle theme"
+        class="relative z-[110] w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors"
       >
         <img
           id="theme-icon"
           src="assets/icons/sol.svg"
-          alt="Cambiar tema"
+          alt="Theme Toggle"
           class="w-6 h-6"
         />
       </button>
+
       <div
-        class="absolute left-1/2 transform -translate-x-1/2 text-xl font-bold uppercase"
+        class="absolute left-1/2 -translate-x-1/2 text-lg md:text-xl font-black uppercase tracking-tighter"
       >
-        Emma Agatiello
+        YOUR NAME
       </div>
 
-      <nav class="flex space-x-4">
-        <a href="#hero">Hero</a>
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
+      <nav
+        class="hidden md:flex space-x-6 text-xs font-bold uppercase tracking-widest"
+      >
+        <a href="#hero" class="hover:opacity-50 transition-opacity">HERO</a>
+        <a href="#about" class="hover:opacity-50 transition-opacity">ABOUT</a>
+        <a href="#projects" class="hover:opacity-50 transition-opacity"
+          >PROJECTS</a
+        >
+        <a href="#contact" class="hover:opacity-50 transition-opacity"
+          >CONTACT</a
+        >
       </nav>
+
+      <button
+        id="menu-btn"
+        class="md:hidden relative z-[110] flex flex-col justify-between w-6 h-4 outline-none"
+      >
+        <span class="line line-1 w-full h-0.5 bg-current"></span>
+        <span class="line line-2 w-full h-0.5 bg-current"></span>
+        <span class="line line-3 w-full h-0.5 bg-current"></span>
+      </button>
     </header>
 
-    <!-- LOADER -->
+    <div
+      id="mobile-menu"
+      class="fixed inset-0 z-[105] bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center space-y-8 text-3xl font-black uppercase translate-x-full transition-transform duration-500 ease-in-out md:hidden"
+    >
+      <a href="#hero" class="mobile-link">HERO</a>
+      <a href="#about" class="mobile-link">ABOUT</a>
+      <a href="#projects" class="mobile-link">PROJECTS</a>
+      <a href="#contact" class="mobile-link">CONTACT</a>
+    </div>
+
     <section
       id="loader"
-      class="fixed inset-0 flex justify-center items-center z-50"
+      class="fixed inset-0 flex justify-center items-center z-[200] bg-black"
     >
-      <h1 class="loader-text text-4xl sm:text-6xl md:text-7xl font-bold">
+      <h1
+        class="loader-text text-4xl sm:text-6xl md:text-7xl font-bold flex gap-1"
+      >
         <span>P</span><span>O</span><span>R</span><span>T</span><span>F</span
         ><span>O</span><span>L</span><span>I</span><span>O</span>
       </h1>
     </section>
 
-    <!-- SCROLL MARKER -->
-    <div class="scroll-marker fixed left-8 bottom-4 text-white z-50">
-      <svg width="40" height="40" viewBox="0 0 100 100">
-        <circle
-          cx="50"
-          cy="50"
-          r="40"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="8"
-        />
-      </svg>
+    <main>
+      <section
+        id="hero"
+        class="relative h-screen flex flex-col justify-center items-center text-center overflow-hidden px-4"
+      >
+        <canvas id="hero-canvas" class="absolute inset-0 z-0"></canvas>
+        <h1
+          id="hero-title"
+          class="text-5xl sm:text-8xl md:text-9xl font-black uppercase relative z-10 leading-none"
+        >
+          YOUR NAME
+        </h1>
+        <p
+          class="mt-4 text-sm sm:text-lg md:text-xl uppercase tracking-[0.3em] relative z-10 opacity-70"
+        >
+          GRAPHIC DESIGNER / WEB CREATIVE
+        </p>
+      </section>
+
+      <section id="about" class="h-screen relative bg-transparent">
+        <div class="about-inner h-full w-fit">
+          <div
+            class="panel flex-shrink-0 w-[100vw] md:w-[80vw] h-full flex items-center justify-center p-6 md:p-12"
+          >
+            <div
+              class="flex flex-col md:flex-row h-auto md:h-[70%] w-full max-w-6xl gap-8 md:gap-12 items-center"
+            >
+              <img
+                src="assets/images/foto_portfolio.jpg"
+                class="object-cover h-[40vh] md:h-full w-full md:w-1/2 rounded-2xl shadow-2xl"
+                alt="Profile"
+              />
+              <div
+                class="flex flex-col justify-center text-center md:text-left"
+              >
+                <h2
+                  class="text-4xl md:text-7xl font-800 uppercase leading-none"
+                >
+                  About<br /><span class="opacity-50 italic">My Journey</span>
+                </h2>
+                <p class="mt-6 text-lg md:text-xl opacity-70">
+                  Scroll horizontally to explore my background and philosophy.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="panel flex-shrink-0 w-[100vw] h-full flex flex-col justify-center p-6 md:p-12 bg-white/5 backdrop-blur-sm"
+          >
+            <div class="max-w-6xl mx-auto w-full">
+              <h3
+                class="text-2xl md:text-3xl font-bold mb-8 uppercase tracking-widest border-b border-white/20 pb-4 inline-block"
+              >
+                Background
+              </h3>
+              <div
+                class="columns-1 md:columns-3 gap-12 text-sm md:text-lg leading-relaxed opacity-80 h-[50vh] md:h-auto overflow-y-auto md:overflow-visible"
+              >
+                <p class="mb-6">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
+                  elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus
+                  leo. Quisque faucibus ex sapien vitae pellentesque sem
+                  placerat. In id cursus mi pretium tellus duis convallis.
+                </p>
+                <p class="mb-6">
+                  Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus
+                  fringilla lacus nec metus bibendum egestas. Iaculis massa nisl
+                  malesuada lacinia integer nunc posuere. Ad litora torquent per
+                  conubia nostra inceptos himenaeos.
+                </p>
+                <p class="mb-6">
+                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+                  accusantium doloremque laudantium, totam rem aperiam, eaque
+                  ipsa quae ab illo inventore veritatis et quasi architecto
+                  beatae vitae dicta sunt explicabo.
+                </p>
+                <p>
+                  Neque porro quisquam est, qui dolorem ipsum quia dolor sit
+                  amet, consectetur, adipisci velit, sed quia non numquam eius
+                  modi tempora incidunt ut labore et dolore magnam aliquam
+                  quaerat voluptatem. Ut enim ad minima veniam, quis nostrum
+                  exercitationem.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="panel flex-shrink-0 w-[100vw] md:w-[60vw] h-full flex items-center justify-center p-6 md:p-12"
+          >
+            <blockquote
+              class="text-3xl md:text-6xl font-800 italic text-center leading-tight max-w-4xl"
+            >
+              "Design is not just what it looks like and feels like. <br />
+              <span
+                class="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500"
+              >
+                Design is how it works. </span
+              >"
+            </blockquote>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects" class="py-24 px-6 md:px-12">
+        <div class="max-w-7xl mx-auto">
+          <div
+            class="project-filters flex flex-wrap justify-center gap-4 mb-16"
+          >
+            <button
+              data-type="photo"
+              class="px-6 py-2 rounded-full border border-white/20 hover:bg-white hover:text-black transition-all font-bold uppercase text-xs tracking-widest active"
+            >
+              Photography
+            </button>
+            <button
+              data-type="branding"
+              class="px-6 py-2 rounded-full border border-white/20 hover:bg-white hover:text-black transition-all font-bold uppercase text-xs tracking-widest"
+            >
+              Branding
+            </button>
+            <button
+              data-type="3d"
+              class="px-6 py-2 rounded-full border border-white/20 hover:bg-white hover:text-black transition-all font-bold uppercase text-xs tracking-widest"
+            >
+              3D
+            </button>
+          </div>
+
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8"
+            id="projects-container"
+          >
+            <div
+              class="project-card js-modal-trigger group cursor-pointer overflow-hidden rounded-xl"
+              data-type="photo"
+            >
+              <img
+                src="https://ik.imagekit.io/8udxss2ua/black&white/Agatiello-Emma-contrast1.jpg?updatedAt=1736367087208"
+                alt="Photo 1"
+                class="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+            </div>
+
+            <a
+              href="404.html"
+              class="project-card group cursor-pointer overflow-hidden rounded-xl"
+              data-type="photo"
+            >
+              <img
+                src="https://ik.imagekit.io/8udxss2ua/vibid%20bites/naranjas.jpg?updatedAt=1736252734999"
+                alt="Photo 2"
+                class="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+            </a>
+            <a
+              href="404.html"
+              class="project-card group cursor-pointer overflow-hidden rounded-xl"
+              data-type="photo"
+            >
+              <img
+                src="https://ik.imagekit.io/8udxss2ua/black&white/Agatiello-Emma-contrast4.jpg?updatedAt=1736367087020"
+                alt="Photo 3"
+                class="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+            </a>
+            <a
+              href="404.html"
+              class="project-card group cursor-pointer overflow-hidden rounded-xl"
+              data-type="branding"
+            >
+              <img
+                src="https://ik.imagekit.io/8udxss2ua/parque%20atracciones/papeler%C3%ADa%20corporativa.png?updatedAt=1736252770074"
+                alt="Branding 1"
+                class="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+            </a>
+            <a
+              href="404.html"
+              class="project-card group cursor-pointer overflow-hidden rounded-xl"
+              data-type="branding"
+            >
+              <img
+                src="https://ik.imagekit.io/8udxss2ua/CERVEZA/1botella-inc-delante-dorada.png?updatedAt=1736380007052"
+                alt="Branding 2"
+                class="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+            </a>
+            <a
+              href="404.html"
+              class="project-card group cursor-pointer overflow-hidden rounded-xl"
+              data-type="3d"
+            >
+              <img
+                src="https://ik.imagekit.io/8udxss2ua/miniso%203d/Agatiello.Emma_3.1_Render_with_materials.png?updatedAt=1736373938218"
+                alt="3D 1"
+                class="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="contact"
+        class="min-h-screen flex justify-center items-center p-6 bg-transparent"
+      >
+        <form
+          class="contact-form w-full max-w-xl bg-white/5 p-8 md:p-12 rounded-3xl backdrop-blur-md border border-white/10 shadow-2xl"
+        >
+          <h2
+            class="text-3xl md:text-5xl font-black uppercase mb-8 text-center"
+          >
+            Get in touch
+          </h2>
+          <div class="space-y-4">
+            <input
+              type="text"
+              placeholder="Full Name"
+              class="w-full bg-white/10 border border-white/10 p-4 rounded-xl outline-none focus:border-white transition-colors"
+              required
+            />
+            <input
+              type="email"
+              placeholder="Email Address"
+              class="w-full bg-white/10 border border-white/10 p-4 rounded-xl outline-none focus:border-white transition-colors"
+              required
+            />
+            <textarea
+              placeholder="Your Message"
+              class="w-full bg-white/10 border border-white/10 p-4 rounded-xl outline-none focus:border-white transition-colors h-40 resize-none"
+              required
+            ></textarea>
+            <button
+              type="submit"
+              class="w-full bg-white text-black font-black py-4 rounded-xl hover:scale-[1.02] active:scale-95 transition-all uppercase tracking-widest"
+            >
+              Send Message
+            </button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <div
+      id="project-modal"
+      class="hidden fixed inset-0 z-[300] flex items-center justify-center bg-black/80 backdrop-blur-xl p-4"
+    >
+      <div
+        class="modal-content relative bg-zinc-900 p-4 md:p-8 rounded-3xl max-w-4xl w-full text-white shadow-2xl scale-90 opacity-0 transition-all duration-300"
+      >
+        <button
+          id="close-modal"
+          class="absolute top-4 right-4 text-3xl hover:rotate-90 transition-transform"
+        >
+          ✕
+        </button>
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+          <img
+            id="modal-img"
+            src="https://ik.imagekit.io/8udxss2ua/black&white/Agatiello-Emma-contrast1.jpg?updatedAt=1736367087208"
+            alt="Preview"
+            class="rounded-xl w-full object-cover h-[40vh] md:h-auto"
+          />
+          <div>
+            <h3 id="modal-title" class="text-3xl font-black uppercase mb-4">
+              Project Title
+            </h3>
+            <p id="modal-desc" class="opacity-70 leading-relaxed mb-6">
+              Detailed information about the creative process and the final
+              result of this specific piece.
+            </p>
+            <div class="flex gap-4">
+              <span
+                class="px-4 py-1 bg-white/10 rounded-full text-xs uppercase font-bold tracking-tighter"
+                >Design</span
+              >
+              <span
+                class="px-4 py-1 bg-white/10 rounded-full text-xs uppercase font-bold tracking-tighter"
+                >2026</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- HERO SECTION -->
-    <section
-      id="hero"
-      class="h-screen flex flex-col justify-center items-center text-center"
-    >
-      <h1
-        id="hero-title"
-        class="text-6xl sm:text-8xl md:text-9xl font-bold uppercase cursor-pointer"
-      >
-        EMMA AGATIELLO
-      </h1>
-      <p class="mt-4 text-lg sm:text-xl uppercase cursor-pointer">
-        GRAPHIC DESIGNER / WEB CREATIVE
-      </p>
-    </section>
+    <footer class="py-12 px-4 text-center">
+      <div class="container mx-auto flex flex-col items-center gap-6">
+        <nav class="links flex gap-6">
+          <a href="#hero">HERO</a>
 
-    <!-- ABOUT / SKILLS -->
-    <section id="about" class="h-[80vh] relative overflow-hidden p-8">
-      <div class="about-inner flex h-full">
-        <!-- Imagen -->
-        <div class="flex-shrink-0 w-fit h-full">
-          <img
-            src="assets/images/foto_portfolio.jpg"
-            class="object-cover h-full w-full"
-            alt="Foto"
-          />
+          <a href="#about">ABOUT</a>
+
+          <a href="#projects">PROJECTS</a>
+
+          <a href="#contact">CONTACT</a>
+        </nav>
+
+        <div class="contact-info text-sm opacity-80">
+          <p>Email: emma@agatiello.net</p>
+
+          <p>Phone: +XX 000 00 00 00</p>
+
+          <p>Based in: Madrid, Spain</p>
         </div>
 
-        <!-- Texto -->
-        <div class="flex-shrink-0 w-1/2 h-full p-8 flex flex-col justify-start">
-          <h2 class="text-3xl sm:text-4xl font-bold uppercase">SOBRE MÍ</h2>
-          <p class="mt-4 columns-2 gap-8">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget
-            convallis mauris. Praesent vitae velit eu justo tincidunt commodo.
-            Vestibulum ac lacus vitae purus efficitur ultricies. Donec eget
-            sagittis purus. Proin euismod, mi a sagittis laoreet, risus felis
-            aliquet enim, at placerat mauris magna sed magna. Pellentesque
-            habitant morbi tristique senectus et netus et malesuada fames ac
-            turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus
-            et ultrices posuere cubilia curae; Fusce efficitur, nunc eget
-            efficitur lacinia, sapien urna vehicula sapien, non efficitur odio
-            eros a nisi. Aliquam erat volutpat. Integer imperdiet, sapien
-            pharetra egestas viverra, magna sapien pharetra magna, nec efficitur
-            leo purus sed nulla. Morbi consequat dolor nec leo scelerisque
-            blandit. Sed ultricies arcu id diam fermentum, sed placerat erat
-            porttitor. Pellentesque habitant morbi tristique senectus et netus
-            et malesuada fames ac turpis egestas. Integer bibendum, sapien vel
-            suscipit iaculis, libero enim pharetra purus, in dapibus elit metus
-            at purus. Cras fermentum, libero ut ullamcorper bibendum, lacus
-            magna ultricies ex, vitae luctus ligula mi in metus.
-            <!-- Añade más texto si quieres -->
-          </p>
+        <div class="social-links flex gap-4">
+          <a href="#" class="social-link">Behance</a>
+
+          <a href="#" class="social-link">LinkedIn</a>
         </div>
+
+        <p class="text-xs opacity-50 mt-8">
+          © 2026 Your Name. All rights reserved.
+        </p>
       </div>
-    </section>
+    </footer>
 
-    <!-- PROJECTS -->
-    <section id="projects" class="min-h-screen bg-black p-8">
-      <h2 class="text-4xl font-bold opacity-0 mb-8">Proyectos</h2>
-      <div class="flex space-x-4 mb-4 opacity-0 flex-wrap">
-        <button class="project-filter px-4 py-2 border rounded" data-type="all">
-          All
-        </button>
-        <button
-          class="project-filter px-4 py-2 border rounded"
-          data-type="photo"
-        >
-          Fotografía
-        </button>
-        <button
-          class="project-filter px-4 py-2 border rounded"
-          data-type="branding"
-        >
-          Branding
-        </button>
-        <button class="project-filter px-4 py-2 border rounded" data-type="3d">
-          3D
-        </button>
-      </div>
-      <div
-        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8"
-        id="projects-container"
-      >
-        <div
-          class="project-card bg-gray-800 p-4 rounded opacity-0"
-          data-type="photo"
-        >
-          <h3 class="text-xl font-bold">Proyecto 1</h3>
-        </div>
-        <div
-          class="project-card bg-gray-800 p-4 rounded opacity-0"
-          data-type="branding"
-        >
-          <h3 class="text-xl font-bold">Proyecto 2</h3>
-        </div>
-        <div
-          class="project-card bg-gray-800 p-4 rounded opacity-0"
-          data-type="3d"
-        >
-          <h3 class="text-xl font-bold">Proyecto 3</h3>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section
-      id="contact"
-      class="h-screen flex flex-col justify-center items-center bg-gray-900 text-white"
-    >
-      <h2 class="text-4xl font-bold opacity-0">Contacto</h2>
-      <p class="mt-4 opacity-0">Aquí puedes escribirme</p>
-      <div class="mt-8 flex space-x-4 opacity-0 flex-wrap">
-        <a href="#">Instagram</a>
-        <a href="#">LinkedIn</a>
-        <a href="#">Email</a>
-      </div>
-    </section>
-
-    <!-- JS -->
     <script src="assets/js/main.js"></script>
   </body>
 </html>

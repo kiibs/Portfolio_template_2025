@@ -1,33 +1,133 @@
-body {
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  height: 100vh;
-  background: #111;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+}
+
+body {
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  transition: background-color 0.4s ease;
+}
+
+body.bg-black {
+  background: #050505;
   color: white;
-  font-family: sans-serif;
+}
+body.bg-white {
+  background: #f8f9fa;
+  color: #1a1a1a;
 }
 
-#svg-row {
-  display: flex;
-  gap: 40px;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 40px;
+.blobs-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  overflow: hidden;
+  /* Blur at 80px prevents the eye from seeing individual shapes, creating the "mesh" effect */
+  filter: blur(80px);
+  opacity: 0.6;
 }
 
-.morph-box svg {
-  width: 80px;
-  height: 80px;
-  fill: #ffda44;
+.blob {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  /* "Screen" ensures colors brighten when they overlap, simulating light mixing */
+  mix-blend-mode: screen;
 }
 
-#error-text {
-  font-size: 4rem;
-  opacity: 0;
-  transform: scale(0.8);
-  transition: all 0.8s ease;
+.blob-1 {
+  background: rgba(255, 60, 191, 0.4);
+  top: -10%;
+  left: -10%;
+}
+.blob-2 {
+  background: rgba(124, 255, 178, 0.3);
+  bottom: -10%;
+  right: -5%;
+}
+.blob-3 {
+  background: rgba(60, 176, 255, 0.4);
+  top: 40%;
+  left: 30%;
+}
+.blob-4 {
+  background: rgba(255, 179, 71, 0.3);
+  bottom: 20%;
+  left: 10%;
+}
+
+body.bg-white .blob {
+  /* "Multiply" is used in light mode to darken overlaps instead of glowing */
+  mix-blend-mode: multiply;
+  opacity: 0.4;
+}
+
+.error-card {
+  position: relative;
+  z-index: 10;
+  max-width: 520px;
+  padding: 3.5rem 2.5rem;
+  text-align: center;
+  border-radius: 32px;
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+body.bg-white .error-card {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+}
+
+.error-number {
+  font-size: clamp(5rem, 15vw, 9rem);
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #ff3cbf, #ffb347, #7cffb2, #3cb0ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 30px rgba(255, 60, 191, 0.2));
+}
+
+.error-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.error-subtitle {
+  font-size: 1rem;
+  opacity: 0.8;
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+}
+
+.error-button {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  border-radius: 100px;
+  font-weight: 600;
+  text-decoration: none;
+  background: white;
+  color: black;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.error-button:hover {
+  transform: scale(1.05) translateY(-3px);
+  box-shadow: 0 15px 30px rgba(255, 60, 191, 0.3);
+}
+
+body.bg-white .error-button {
+  background: #000;
+  color: #fff;
 }

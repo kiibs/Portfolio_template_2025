@@ -1,80 +1,39 @@
-gsap.registerPlugin(MorphSVGPlugin);
-
-// --- CONFIG ---------------------------------------------------------
-
-const icons = [
-  "assets/icons/svg1.svg",
-  "assets/icons/svg2.svg",
-  "assets/icons/svg3.svg",
-];
-
-const finalIcon = "assets/icons/final.svg";
-
-// -------------------------------------------------------------------
-
-// Cargar un SVG externo y devolver su <path>
-async function loadSVG(url) {
-  const response = await fetch(url);
-  const text = await response.text();
-
-  // Crear un DOM temporal
-  const temp = document.createElement("div");
-  temp.innerHTML = text;
-
-  // Buscar el primer path dentro del SVG
-  const path = temp.querySelector("path");
-
-  if (!path) {
-    console.error("El SVG no tiene un <path>: ", url);
-    return null;
-  }
-
-  return path.getAttribute("d"); // devolvemos el atributo d
+const savedTheme = localStorage.getItem("theme") || "dark";
+if (savedTheme === "dark") {
+  document.body.classList.add("bg-black", "text-white");
+} else {
+  document.body.classList.add("bg-white", "text-black");
 }
 
-// Inicializar animación
-(async function init() {
-  const svgRow = document.getElementById("svg-row");
+gsap.from(".error-card", {
+  opacity: 0,
+  y: 30,
+  duration: 1.5,
+  ease: "expo.out",
+});
 
-  const shapesD = [];
-  for (let file of icons) {
-    shapesD.push(await loadSVG(file));
-  }
-
-  const finalPathD = await loadSVG(finalIcon);
-
-  // Crear 3 <svg> inline en la página
-  const svgs = shapesD.map((d, i) => {
-    const box = document.createElement("div");
-    box.classList.add("morph-box");
-
-    box.innerHTML = `
-      <svg viewBox="0 0 100 100">
-        <path d="${d}" />
-      </svg>
-    `;
-
-    svgRow.appendChild(box);
-    return box.querySelector("path");
+const animateBlob = (selector, xRange, yRange, duration) => {
+  gsap.to(selector, {
+    x: `random(-${xRange}, ${xRange})`,
+    y: `random(-${yRange}, ${yRange})`,
+    duration: duration,
+    repeat: -1,
+    yoyo: true,
+    ease: "sine.inOut",
+    /* repeatRefresh prevents the animation from looping perfectly, ensuring a chaotic, organic movement */
+    repeatRefresh: true,
   });
+};
 
-  // Animar secuencia
-  const tl = gsap.timeline({ defaults: { duration: 1, ease: "power2.inOut" } });
+animateBlob(".blob-1", 100, 150, 8);
+animateBlob(".blob-2", 150, 100, 10);
+animateBlob(".blob-3", 200, 150, 12);
+animateBlob(".blob-4", 120, 180, 9);
 
-  // svg1 → svg2
-  tl.to(svgs[0], { morphSVG: shapesD[1] }, "+=0.2");
-
-  // svg2 → svg3
-  tl.to(svgs[1], { morphSVG: shapesD[2] }, "-=0.8");
-
-  // svg3 → final
-  tl.to(svgs[2], { morphSVG: finalPathD }, "-=0.8");
-
-  // Todos a forma final
-  tl.to(svgs[0], { morphSVG: finalPathD });
-  tl.to(svgs[1], { morphSVG: finalPathD }, "-=1");
-  tl.to(svgs[2], { morphSVG: finalPathD }, "-=1");
-
-  // Mostrar texto 404
-  tl.to("#error-text", { opacity: 1, scale: 1, duration: 1 });
-})();
+gsap.to(".error-card", {
+  y: "-=10",
+  duration: 3,
+  repeat: -1,
+  yoyo: true,
+  ease: "sine.inOut",
+});

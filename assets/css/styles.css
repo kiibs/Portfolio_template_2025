@@ -1,15 +1,9 @@
-/* -------------------------
-   GLOBAL
-------------------------- */
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   overflow-x: hidden;
   transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-/* -------------------------
-   NAVBAR
-------------------------- */
 nav a:hover {
   background: linear-gradient(
     90deg,
@@ -22,7 +16,6 @@ nav a:hover {
   -webkit-text-fill-color: transparent;
 }
 
-/* NAVBAR – Glassmorphism */
 header {
   position: fixed;
   top: 0;
@@ -35,11 +28,10 @@ header {
   z-index: 50;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-radius: 0 0 16px 16px; /* opcional, bordes redondeados abajo */
+  border-radius: 0 0 16px 16px;
   transition: background-color 0.4s ease, border 0.4s ease;
 }
 
-/* Fondo según tema */
 body.bg-black header {
   background-color: rgba(0, 0, 0, 0.5);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -50,9 +42,6 @@ body.bg-white header {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-/* -------------------------
-   LOADER
-------------------------- */
 #loader {
   position: fixed;
   inset: 0;
@@ -67,9 +56,6 @@ body.bg-white header {
   display: inline-block;
 }
 
-/* -------------------------
-   CURSOR
-------------------------- */
 .cursor {
   position: fixed;
   width: 20px;
@@ -81,20 +67,34 @@ body.bg-white header {
   z-index: 1000;
 }
 
-/* -------------------------
-   ABOUT (scroll horizontal)
-------------------------- */
+#hero-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
 #about {
-  padding-top: 8rem; /* desde arriba */
+  will-change: transform;
 }
 
 .about-inner {
   display: flex;
-  width: 200%;
+  flex-wrap: nowrap;
+  height: 100vh;
 }
-/* -------------------------
-   SCROLL MARKER
-------------------------- */
+
+.panel {
+  height: 100vh;
+  position: relative;
+}
+
+.columns-3 {
+  column-fill: auto;
+  height: 60vh;
+}
+
 .scroll-marker {
   position: fixed;
   left: 1.5rem;
@@ -102,18 +102,292 @@ body.bg-white header {
   z-index: 40;
 }
 
-/* -------------------------
-   DARK / LIGHT
-------------------------- */
 .bg-black {
   background-color: black;
+  color: white;
 }
 .bg-white {
   background-color: white;
+  color: black;
 }
 .text-white {
   color: white;
 }
 .text-black {
   color: black;
+}
+
+footer {
+  position: relative;
+  padding: 80px 20px 40px;
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 32px 32px 0 0;
+  transition: background-color 0.4s ease, border-color 0.4s ease;
+  text-align: center;
+}
+
+body.bg-black footer {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+body.bg-white footer {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  color: black;
+}
+
+footer .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+footer .links {
+  display: flex;
+  gap: 24px;
+}
+
+footer .links a {
+  position: relative;
+  text-decoration: none;
+  font-weight: 500;
+  color: inherit;
+  padding: 4px 0;
+  background-image: linear-gradient(
+    90deg,
+    rgb(255, 0, 183),
+    orange,
+    rgb(5, 254, 5),
+    rgb(1, 162, 255)
+  );
+  background-size: 0% 100%;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  -webkit-background-clip: text;
+  background-clip: text;
+  transition: background-size 0.4s ease;
+}
+
+footer .links a:hover {
+  background-size: 100% 100%;
+  color: transparent;
+}
+
+footer .contact-info {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+footer .contact-info a {
+  color: inherit;
+  text-decoration: none;
+}
+
+footer .contact-info a:hover {
+  text-decoration: underline;
+}
+
+footer .social-links {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+footer .social-link {
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px 15px;
+  border-radius: 20px;
+  border: 1px solid currentColor;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.bg-black footer .social-link:hover {
+  background-color: white;
+  color: black;
+}
+
+body.bg-white footer .social-link:hover {
+  background-color: black;
+  color: white;
+}
+
+footer .social-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+}
+
+footer .footer-bottom {
+  margin-top: 32px;
+  font-size: 12px;
+  text-align: center;
+  opacity: 0.6;
+}
+
+#projects {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 4rem 2rem;
+}
+.project-filters {
+  padding: 4rem 1rem;
+}
+
+.project-filters button {
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid currentColor;
+  background: transparent;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+body.bg-black .project-filters button {
+  color: white;
+  border-color: white;
+}
+body.bg-white .project-filters button {
+  color: black;
+  border-color: black;
+}
+
+.project-filters button:hover {
+  transform: scale(1.05);
+}
+
+.project-filters button.active {
+  background: linear-gradient(
+    90deg,
+    #ffb7eb,
+    rgb(255, 202, 104),
+    #a1ffa1,
+    #86d2ff
+  );
+  color: black !important;
+  transform: scale(1.1);
+}
+
+.project-card {
+  overflow: hidden;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: transform 0.4s ease;
+  width: 300px;
+  height: 200px;
+  display: block;
+  margin: 1rem;
+}
+
+.project-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.project-card:hover img {
+  transform: scale(1.05);
+}
+
+#project-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+}
+
+#project-modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  border-radius: 20px;
+  max-width: 600px;
+  color: white;
+}
+
+#contact {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.contact-form {
+  backdrop-filter: blur(15px);
+  background: rgba(0, 0, 0, 0.838);
+  padding: 2rem;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 500px;
+  color: rgb(250, 250, 250);
+}
+
+body.bg-black .contact-form {
+  background: rgba(255, 255, 255, 0.147);
+  color: white;
+}
+
+.contact-form input,
+.contact-form textarea,
+.contact-form button {
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+  background: rgba(0, 0, 0, 0.2);
+  color: inherit;
+}
+
+body.bg-black .contact-form input,
+body.bg-black .contact-form textarea {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.contact-form button {
+  background: linear-gradient(
+    90deg,
+    #fe73d7,
+    rgb(251, 190, 75),
+    #5dda5d,
+    #3eb8fe
+  );
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.contact-form button:hover {
+  transform: scale(1.05);
 }

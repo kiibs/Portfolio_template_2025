@@ -1,25 +1,34 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>404</title>
-
-    <link rel="stylesheet" type="text/css" href="../assets/css/404.css" />
-
-    <!-- GSAP Core -->
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
-
-    <!-- MorphSVGPlugin (debes tenerlo en tu carpeta js) -->
-    <script src="assets/js/MorphSVGPlugin.min.js"></script>
+    <title>404 — Page Not Found</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/css/404.css" />
   </head>
-  <body>
-    <div id="svg-row">
-      <!-- Los SVG inline se generan desde JS -->
-    </div>
+  <body class="bg-black text-white overflow-hidden">
+    <main class="relative min-h-screen flex items-center justify-center p-4">
+      <div class="blobs-container">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+      </div>
 
-    <h1 id="error-text">404</h1>
-
-    <script src="../assets/js/404.js"></script>
+      <div class="error-card w-full max-w-[500px] p-8 md:p-12 text-center">
+        <h1 class="error-number text-[5rem] md:text-[9rem]">404</h1>
+        <p class="text-xl md:text-2xl font-bold mb-4">Dimension Drift</p>
+        <p class="text-sm md:text-base opacity-70 mb-8">
+          The page you’re looking for doesn’t exist.
+        </p>
+        <a
+          href="index.html"
+          class="error-button inline-block px-8 py-3 bg-white text-black rounded-full font-bold"
+        >
+          Return Home
+        </a>
+      </div>
+    </main>
+    <script src="assets/js/404.js"></script>
   </body>
 </html>
